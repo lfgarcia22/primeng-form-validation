@@ -1,7 +1,7 @@
 # Directiva: form-validation
 Valudador de formularios personalizado para Angular y PrimeNG.
 
-_Leer en otro idioma: [Inglés](README.md)_
+#_Leer en otro idioma: [Inglés](https://gitlab.com/von-development-studio/angular-libraries-source/form-validation/blob/master/README.md)_
 
 ## Requerimientos
 * [Angular](https://angular.io/guide/quickstart) (v7.1.0)

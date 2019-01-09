@@ -1,7 +1,7 @@
 # Directive: form-validation
 Custom form validation for Angular and PrimeNG.
 
-_Read this in other language: [Spanish](README.es.md)_
+_Read this in other language: [Spanish](https://gitlab.com/von-development-studio/angular-libraries-source/form-validation/blob/master/README.es.md)_
 
 ## Requirements
 * [Angular](https://angular.io/guide/quickstart) (v7.1.0)
