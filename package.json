@@ -1,6 +1,20 @@
 {
-  "name": "form-validation",
+  "name": "@von-development-studio/form-validation",
   "version": "0.0.1",
+  "description": "Custom form validation for Angular and PrimeNG.",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/von-development-studio/angular-libraries-source/form-validation"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular 2",
+    "form",
+    "validation"
+  ],
+  "author": "Luis García Castro",
+  "license": "ISC",
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
