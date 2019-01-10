@@ -40,7 +40,7 @@ describe('Directive: validation', () => {
     });
   });
 
-  it('Should run valid required validation when component is required ', async () => {
+  it('Should run valid required validation when component is required', async () => {
     setGlobalVariables(INPUT_EXAMPLES.required);
     const checkRequiredValidationSpy = spyOn<any>(directive, 'checkRequiredValidation');
 
@@ -55,36 +55,73 @@ describe('Directive: validation', () => {
     expect(inputEl.nativeElement.classList).not.toContain('ng-invalid');
   });
 
-  it('Should run invalid required validation when component is required ', async () => {
+  it('Should run invalid required validation when component is required', async () => {
     setGlobalVariables(INPUT_EXAMPLES.required);
 
     fixture.detectChanges();
-    directive['checkRequiredValidation']();
+    directive['doValidation']();
 
     expect(directive.ngModel).not.toBeDefined();
     expect(directive['isValid']).toBeFalsy();
     expect(directive['message']).toBeDefined();
+    expect(directive['message']).not.toContain('${name}');
     expect(inputEl.nativeElement.classList).toContain('ng-invalid');
   });
 
-  it('Should show required message when attribute is added ', async () => {
+  it('Should show required message when attribute is added', async () => {
     setGlobalVariables(INPUT_EXAMPLES.requiredWithMessage);
 
     fixture.detectChanges();
-    directive['checkRequiredValidation']();
+    directive['doValidation']();
 
     expect(directive['isValid']).toBeFalsy();
     expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
+    expect(directive['message']).not.toContain('${name}');
   });
 
-  it('Should show required message when input is added ', async () => {
+  it('Should show required message when input is added', async () => {
     setGlobalVariables(INPUT_EXAMPLES.requiredVariableMessage);
 
     fixture.detectChanges();
-    directive['checkRequiredValidation']();
+    directive['doValidation']();
 
     expect(directive['isValid']).toBeFalsy();
     expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
+    expect(directive['message']).not.toContain('${name}');
+  });
+
+  it('Should call checkEqualToValidation when comoponent has equalTo attribute', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.equalTo);
+    const checkEqualToValidationSpy = spyOn<any>(directive, 'checkEqualToValidation');
+
+    fixture.detectChanges();
+    directive['doValidation']();
+
+    expect(checkEqualToValidationSpy).toHaveBeenCalled();
+  });
+
+  it('Should run validation when input equalTo is added', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.equalTo);
+
+    fixture.detectChanges();
+    directive['doValidation']();
+
+    expect(directive['isValid']).toBeFalsy();
+    expect(directive['message']).toBeDefined();
+    expect(directive['message']).not.toContain('${field1}');
+    expect(inputEl.nativeElement.classList).toContain('ng-equal-to');
+  });
+
+  it('Should not show validation message when is equalTo true', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.equalTo);
+    component.toValidate = 'EQUAL';
+
+    fixture.detectChanges();
+    directive['doValidation']();
+
+    expect(directive['isValid']).toBeTruthy();
+    expect(directive['message']).not.toBeDefined();
+    expect(inputEl.nativeElement.classList).not.toContain('ng-equal-to');
   });
 
 });

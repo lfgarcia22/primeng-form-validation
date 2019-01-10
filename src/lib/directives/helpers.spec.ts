@@ -9,7 +9,8 @@ export const EXPECTED_REQUIRED_MESSAGE: string = 'Testing required fields';
 export const INPUT_EXAMPLES: any = {
   required: `<input [(ngModel)]="toValidate" required validation />`,
   requiredWithMessage: `<input [(ngModel)]="toValidate" required requiredMessage="${EXPECTED_REQUIRED_MESSAGE}" validation />`,
-  requiredVariableMessage: `<input [(ngModel)]="toValidate" required [requiredMessage]="requiredMessage" validation />`
+  requiredVariableMessage: `<input [(ngModel)]="toValidate" required [requiredMessage]="requiredMessage" validation />`,
+  equalTo: `<input [(ngModel)]="toValidate" [equalTo]="equalTo" validation />`
 };
 
 export class MockMessageService {
@@ -37,4 +38,5 @@ export class TestValidateComponent {
 export class TestValidationComponent {
   public toValidate: any;
   public requiredMessage: string = EXPECTED_REQUIRED_MESSAGE;
+  public equalTo: string = 'EQUAL';
 }
