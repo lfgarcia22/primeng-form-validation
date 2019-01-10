@@ -19,14 +19,19 @@ export class FormValidateDirective {
     let isValid: boolean = true;
 
     elements.forEach(el => {
-      if(!el.validity.valid) {
-        if(isValid) el.focus();
+      el.dispatchEvent(new Event('blur'));
+      if(el.classList.contains('ng-invalid')) {
+        if(isValid) {
+          el.focus();
+        }
         isValid = false;
-        el.dispatchEvent(new Event('customBlur'));
+        el.dispatchEvent(new Event('executeValidation'));
       }
     });
 
-    if(isValid) this.customSubmit.emit(e);
+    if(isValid) {
+      this.customSubmit.emit(e);
+    }
   };
 
 }

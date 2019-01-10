@@ -4,7 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormValidationDirective } from './validation.directive';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './validation.directive.spec.helpers';
+import { INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './helpers.spec';
 
 describe('Directive: validation', () => {
 
@@ -52,6 +52,7 @@ describe('Directive: validation', () => {
     expect(directive.ngModel).toBe('NOT NULL');
     expect(directive['isValid']).toBeTruthy();
     expect(directive['message']).not.toBeDefined();
+    expect(inputEl.nativeElement.classList).not.toContain('ng-invalid');
   });
 
   it('Should run invalid required validation when component is required ', async () => {
@@ -62,6 +63,7 @@ describe('Directive: validation', () => {
     expect(directive.ngModel).not.toBeDefined();
     expect(directive['isValid']).toBeFalsy();
     expect(directive['message']).toBeDefined();
+    expect(inputEl.nativeElement.classList).toContain('ng-invalid');
   });
 
 });
