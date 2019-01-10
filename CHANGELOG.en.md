@@ -5,3 +5,7 @@ _Read this in other language: [Spanish](https://gitlab.com/von-development-studi
 
 ## v0.0.2
 * Added form validation functionality
+
+## v0.0.3
+* Custom validation message support
+* {+ _**NEW**_ +} Directives `equalTo` & `equalToElement`
