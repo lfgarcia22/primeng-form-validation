@@ -4,7 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormValidationDirective } from './validation.directive';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './helpers.spec';
+import { EXPECTED_REQUIRED_MESSAGE, INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './helpers.spec';
 
 describe('Directive: validation', () => {
 
@@ -58,12 +58,33 @@ describe('Directive: validation', () => {
   it('Should run invalid required validation when component is required ', async () => {
     setGlobalVariables(INPUT_EXAMPLES.required);
 
+    fixture.detectChanges();
     directive['checkRequiredValidation']();
 
     expect(directive.ngModel).not.toBeDefined();
     expect(directive['isValid']).toBeFalsy();
     expect(directive['message']).toBeDefined();
     expect(inputEl.nativeElement.classList).toContain('ng-invalid');
+  });
+
+  it('Should show required message when attribute is added ', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.requiredWithMessage);
+
+    fixture.detectChanges();
+    directive['checkRequiredValidation']();
+
+    expect(directive['isValid']).toBeFalsy();
+    expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
+  });
+
+  it('Should show required message when input is added ', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.requiredVariableMessage);
+
+    fixture.detectChanges();
+    directive['checkRequiredValidation']();
+
+    expect(directive['isValid']).toBeFalsy();
+    expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
   });
 
 });

@@ -1,17 +1,15 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { NgModel } from '@angular/forms';
 import { VALIDATION_MESSAGES } from './validation.constants';
 
 @Directive({
-  selector: '[validation]',
-  providers: [ NgModel ]
+  selector: '[validation], [validation][requiredMessage]'
 })
 export class FormValidationDirective {
 
   @Input() name: string;
   @Input() ngModel: any;
-  @Input() requiredMessage: string;
+  @Input() requiredMessage: any;
 
   private isValid: boolean = true;
   private message: string;
@@ -44,8 +42,8 @@ export class FormValidationDirective {
     if(this.ngModel === null || this.ngModel === undefined) {
       this.isValid = false;
       this.message = this.requiredMessage
-        ? this.requiredMessage
-        : VALIDATION_MESSAGES.requiredMessage.replace('${name}', this.name);
+          ? this.requiredMessage
+          : VALIDATION_MESSAGES.requiredMessage.replace('${name}', this.name);
       this.element.nativeElement.classList.add('ng-dirty', 'ng-invalid', 'ng-required');
     }
   };
