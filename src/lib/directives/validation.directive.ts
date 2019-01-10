@@ -13,6 +13,7 @@ export class FormValidationDirective {
   @Input() requiredMessage: any;
 
   @Input() equalTo: any;
+  @Input() equalToElement: HTMLInputElement;
 
   private isValid: boolean = true;
   private message: string;
@@ -42,6 +43,9 @@ export class FormValidationDirective {
     if(this.isValid && this.equalTo) {
       this.checkEqualToValidation();
     }
+    if(this.isValid && this.equalToElement) {
+      this.checkEqualToElementValidation();
+    }
   };
 
   private checkRequiredValidation = () => {
@@ -59,6 +63,16 @@ export class FormValidationDirective {
       this.isValid = false;
       this.message = VALIDATION_MESSAGES.equalToSimpleMessage;
       this.message = this.message.replace('${field1}', this.name);
+      this.element.nativeElement.classList.add('ng-dirty', 'ng-invalid', 'ng-equal-to');
+    }
+  };
+
+  private checkEqualToElementValidation = () => {
+    if(this.ngModel !== this.equalToElement.getAttribute('ng-reflect-model')) {
+      this.isValid = false;
+      this.message = VALIDATION_MESSAGES.equalToComplexMessage;
+      this.message = this.message.replace('${field1}', this.name)
+                                 .replace('${field2}', this.equalToElement.name);
       this.element.nativeElement.classList.add('ng-dirty', 'ng-invalid', 'ng-equal-to');
     }
   };
