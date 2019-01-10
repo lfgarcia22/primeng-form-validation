@@ -4,7 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormValidationDirective } from './validation.directive';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { EXPECTED_REQUIRED_MESSAGE, INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './helpers.spec';
+import { EXPECTED_MESSAGES, INPUT_EXAMPLES, MockMessageService, TestValidationComponent } from './helpers.spec';
 
 describe('Directive: validation', () => {
 
@@ -75,7 +75,7 @@ describe('Directive: validation', () => {
     directive['doValidation']();
 
     expect(directive['isValid']).toBeFalsy();
-    expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
+    expect(directive['message']).toBe(EXPECTED_MESSAGES.required);
     expect(directive['message']).not.toContain('${name}');
   });
 
@@ -86,7 +86,7 @@ describe('Directive: validation', () => {
     directive['doValidation']();
 
     expect(directive['isValid']).toBeFalsy();
-    expect(directive['message']).toBe(EXPECTED_REQUIRED_MESSAGE);
+    expect(directive['message']).toBe(EXPECTED_MESSAGES.required);
     expect(directive['message']).not.toContain('${name}');
   });
 
@@ -158,5 +158,16 @@ describe('Directive: validation', () => {
     expect(directive['message']).not.toBeDefined();
     expect(inputEl.nativeElement.classList).not.toContain('ng-equal-to');
   });
+
+  it('Should show equalTo message when input is added', async () => {
+    setGlobalVariables(INPUT_EXAMPLES.equalToMessage);
+
+    fixture.detectChanges();
+    directive['doValidation']();
+
+    expect(directive['isValid']).toBeFalsy();
+    expect(directive['message']).toBe(EXPECTED_MESSAGES.equalTo);
+  });
+
 
 });

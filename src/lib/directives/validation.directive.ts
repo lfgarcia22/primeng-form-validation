@@ -10,10 +10,11 @@ export class FormValidationDirective {
   @Input() name: string;
   @Input() ngModel: any;
   @Input() required: any;
-  @Input() requiredMessage: any;
+  @Input() requiredMessage: string;
 
   @Input() equalTo: any;
   @Input() equalToElement: HTMLInputElement;
+  @Input() equalToMessage: string;
 
   private isValid: boolean = true;
   private message: string;
@@ -61,7 +62,9 @@ export class FormValidationDirective {
   private checkEqualToValidation = () => {
     if(this.ngModel !== this.equalTo) {
       this.isValid = false;
-      this.message = VALIDATION_MESSAGES.equalToSimpleMessage;
+      this.message = this.equalToMessage
+          ? this.equalToMessage
+          : VALIDATION_MESSAGES.equalToSimpleMessage;
       this.message = this.message.replace('${field1}', this.name);
       this.element.nativeElement.classList.add('ng-dirty', 'ng-invalid', 'ng-equal-to');
     }
@@ -70,7 +73,9 @@ export class FormValidationDirective {
   private checkEqualToElementValidation = () => {
     if(this.ngModel !== this.equalToElement.getAttribute('ng-reflect-model')) {
       this.isValid = false;
-      this.message = VALIDATION_MESSAGES.equalToComplexMessage;
+      this.message = this.equalToMessage
+          ? this.equalToMessage
+          : VALIDATION_MESSAGES.equalToComplexMessage;
       this.message = this.message.replace('${field1}', this.name)
                                  .replace('${field2}', this.equalToElement.name);
       this.element.nativeElement.classList.add('ng-dirty', 'ng-invalid', 'ng-equal-to');
