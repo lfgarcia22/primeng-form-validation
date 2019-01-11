@@ -1,5 +1,4 @@
 import { Directive, ElementRef, EventEmitter , HostListener, Input, Output, Renderer, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 @Directive({
   selector: '[validate]'
@@ -20,7 +19,7 @@ export class FormValidateDirective {
 
     elements.forEach(el => {
       el.dispatchEvent(new Event('blur'));
-      if(el.classList.contains('ng-invalid')) {
+      if(!el.validity.valid) {
         if(isValid) {
           el.focus();
         }

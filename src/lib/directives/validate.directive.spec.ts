@@ -41,9 +41,11 @@ describe('Directive: validate', () => {
     component.element.field2 = 'Field 2';
 
     fixture.detectChanges();
-    formEl.triggerEventHandler('submit', SubmitEventParameter);
 
-    expect(submitEventSpy).toHaveBeenCalled();
+    fixture.whenStable().then(() => {
+      formEl.triggerEventHandler('submit', SubmitEventParameter);
+      expect(submitEventSpy).toHaveBeenCalled();
+    });
   });
 
   it('Should not execute submit method when form is not valid', async () => {
@@ -51,9 +53,11 @@ describe('Directive: validate', () => {
     component.element.field1 = 'Field 1';
 
     fixture.detectChanges();
-    formEl.triggerEventHandler('submit', SubmitEventParameter);
 
-    expect(submitEventSpy).not.toHaveBeenCalled();
+    fixture.whenStable().then(() => {
+      formEl.triggerEventHandler('submit', SubmitEventParameter);
+      expect(submitEventSpy).not.toHaveBeenCalled();
+    });
   });
 
 });

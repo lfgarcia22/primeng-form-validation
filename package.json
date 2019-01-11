@@ -1,6 +1,6 @@
 {
   "name": "@von-development-studio/form-validation",
-  "version": "0.0.3-SNAPSHOT",
+  "version": "0.0.3",
   "description": "Custom form validation for Angular and PrimeNG.",
   "repository": {
     "type": "git",
