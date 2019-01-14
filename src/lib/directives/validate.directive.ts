@@ -14,20 +14,20 @@ export class FormValidateDirective {
 
   @HostListener('submit', ['$event']) onSubmitEvent = (e: any) => {
     e.preventDefault();
-    let elements = this.element.nativeElement.querySelectorAll('[validation]');
+    const elements = this.element.nativeElement.querySelectorAll('[validation]');
     let isValid: boolean = true;
+    let isFocused: boolean = false;
 
     elements.forEach(el => {
-      el.dispatchEvent(new Event('blur'));
-      if(!el.validity.valid) {
-        if(isValid) {
+      if(!el.validity.valid || el.classList.contains('ng-invalid')) {
+        el.dispatchEvent(new Event('executeValidation'));
+        isValid = false;
+        if(!isFocused) {
+          isFocused = true;
           el.focus();
         }
-        isValid = false;
-        el.dispatchEvent(new Event('executeValidation'));
       }
     });
-
     if(isValid) {
       this.customSubmit.emit(e);
     }

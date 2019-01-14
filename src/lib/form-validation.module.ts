@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
-
-import { FormValidateDirective, FormValidationDirective } from './form-validation.directives';
+import * as Directives from './form-validation.directives';
 
 @NgModule({
-  declarations: [ FormValidateDirective, FormValidationDirective ],
+  declarations: [
+    Directives.EqualToElementDirective,
+    Directives.EqualToDirective,
+    Directives.FormValidateDirective,
+    Directives.FormValidationDirective
+  ],
   imports: [],
-  exports: [ FormValidateDirective, FormValidationDirective ],
+  exports: [
+    Directives.EqualToElementDirective,
+    Directives.EqualToDirective,
+    Directives.FormValidateDirective,
+    Directives.FormValidationDirective
+  ],
   providers: [ MessageService ]
 })
 export class FormValidationModule { }
