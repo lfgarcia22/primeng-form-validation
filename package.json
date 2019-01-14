@@ -1,6 +1,6 @@
 {
   "name": "@von-development-studio/form-validation",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Custom form validation for Angular and PrimeNG.",
   "repository": {
     "type": "git",
@@ -16,8 +16,8 @@
   "author": "Luis García Castro",
   "license": "ISC",
   "peerDependencies": {
-    "@angular/common": "^7.1.0",
-    "@angular/core": "^7.1.0",
+    "@angular/common": "^7.1.4",
+    "@angular/core": "^7.1.4",
     "primeng": "^7.0.4"
   }
 }
