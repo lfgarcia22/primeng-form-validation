@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter , HostListener, Input, Output, Renderer, ViewChild } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
 
 @Directive({
   selector: '[validate]'
@@ -7,30 +7,36 @@ export class FormValidateDirective {
 
   @Output('validate') customSubmit: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    private element: ElementRef,
-    private renderer: Renderer
-  ) { }
+  constructor(private element: ElementRef) { }
 
   @HostListener('submit', ['$event']) onSubmitEvent = (e: any) => {
     e.preventDefault();
     const elements = this.element.nativeElement.querySelectorAll('[validation]');
-    let isValid: boolean = true;
-    let isFocused: boolean = false;
+    let isValid = true;
+    let isFocused = false;
 
-    elements.forEach(el => {
-      if(!el.validity.valid || el.classList.contains('ng-invalid')) {
+    elements.forEach((el: any) => {
+      const inputEl = this.getInputElement(el);
+      if (!inputEl.validity.valid || inputEl.classList.contains('ng-invalid')) {
         el.dispatchEvent(new Event('executeValidation'));
         isValid = false;
-        if(!isFocused) {
+        if (!isFocused) {
           isFocused = true;
-          el.focus();
+          inputEl.focus();
         }
       }
     });
-    if(isValid) {
+    if (isValid) {
       this.customSubmit.emit(e);
     }
-  };
+  }
+
+  private getInputElement = (el: any) => {
+    if (el.tagName === 'P-CALENDAR' || el.tagName === 'P-AUTOCOMPLETE') {
+      const inputEl = el.querySelector('input');
+      return inputEl;
+    }
+    return el;
+  }
 
 }

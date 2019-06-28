@@ -1,5 +1,5 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
+import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { VALIDATION_MESSAGES } from './validation.constants';
 
@@ -9,7 +9,7 @@ import { VALIDATION_MESSAGES } from './validation.constants';
     { provide: NG_VALIDATORS, useExisting: FormValidationDirective, multi: true }
   ]
 })
-export class FormValidationDirective implements Validator {
+export class FormValidationDirective implements Validator, OnInit {
 
   @Input() name: string;
   @Input() ngModel: any;
@@ -18,38 +18,58 @@ export class FormValidationDirective implements Validator {
 
   private validator: any = null;
   private message: string;
+  private messages: any;
+  private labelText: string;
 
   constructor(
     private element: ElementRef,
     private messageService: MessageService
   ) { }
 
-  public validate(formValue: FormControl) {
+  ngOnInit() {
+    const closestFormEl = this.element.nativeElement.form || this.getClosestForm(this.element.nativeElement);
+
+    const isValidationEn = !closestFormEl.hasAttribute('validation-es');
+    if (isValidationEn) {
+      this.messages = VALIDATION_MESSAGES.EN;
+    } else {
+      this.messages = VALIDATION_MESSAGES.ES;
+    }
+
+    const labelElement = closestFormEl.querySelector(`label[for='${this.name}']`);
+    if (labelElement) {
+      labelElement.classList.add('label-required');
+      this.labelText = labelElement.innerText;
+    }
+  }
+
+  validate(formValue: FormControl) {
     this.runHtmlValidations();
     return this.validator;
   }
 
   @HostListener('executeValidation') executeValidationEvent = () => {
     this.runHtmlValidations();
-    if(this.validator && this.validator.required) {
-      this.messageService.add({severity: 'error', detail: this.message});
+    if (this.validator && this.validator.required) {
+      this.messageService.add({ severity: 'error', detail: this.message });
     }
-  };
+  }
+
+  private getClosestForm = (element: any) => {
+    if (element.tagName === 'FORM' || element.tagName === 'BODY') {
+      return element;
+    }
+    return this.getClosestForm(element.parentElement);
+  }
 
   private runHtmlValidations = () => {
     this.validator = null;
-    if(
-      (
-        this.element.nativeElement.attributes['required']
-        && (this.required == null || this.required)
-      )
-      && this.ngModel === null || this.ngModel === undefined
-    ) {
-      this.message = ( this.requiredMessage
-        ? this.requiredMessage
-        : VALIDATION_MESSAGES.requiredMessage
-      );
-      this.message = this.message.replace('${name}', this.name);
+
+    const isRequired = this.element.nativeElement.hasAttribute('required');
+    if (isRequired && this.ngModel == null) {
+      const message = this.requiredMessage || this.messages.requiredMessage;
+      const name = this.labelText || this.name;
+      this.message = message.replace('${name}', name);
       this.validator = { required: true };
     }
   }
