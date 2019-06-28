@@ -1,0 +1,6 @@
+.label-required {
+  &::before {
+    content: "* ";
+    color: #e91224;
+  }
+}
