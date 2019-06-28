@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { VALIDATION_MESSAGES } from './validation.constants';
 
@@ -30,13 +30,13 @@ export class EqualToElementDirective implements Validator {
   }
 
   @HostListener('executeValidation') executeValidationEvent = () => {
-    if(this.validator && this.validator.equalToElement) {
-      this.messageService.add({severity: 'error', detail: this.message});
+    if (this.validator && this.validator.equalToElement) {
+      this.messageService.add({ severity: 'error', detail: this.message });
     }
-  };
+  }
 
   private setValidation = () => {
-    if(this.validator && this.validator.equalToElement) {
+    if (this.validator && this.validator.equalToElement) {
       this.message = (this.equalToMessage
         ? this.equalToMessage
         : VALIDATION_MESSAGES.equalToSimpleMessage
@@ -46,6 +46,6 @@ export class EqualToElementDirective implements Validator {
     } else {
       this.element.nativeElement.classList.remove('ng-equal-to');
     }
-  };
+  }
 
 }

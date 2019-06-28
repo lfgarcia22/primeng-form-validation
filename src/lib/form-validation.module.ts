@@ -16,6 +16,6 @@ import * as Directives from './form-validation.directives';
     Directives.FormValidateDirective,
     Directives.FormValidationDirective
   ],
-  providers: [ MessageService ]
+  providers: [MessageService]
 })
 export class FormValidationModule { }

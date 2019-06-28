@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 export const SubmitEventParameter = {
-  preventDefault: () => {},
-  dispatchEvent: (value: any) => {}
+  preventDefault: () => { },
+  dispatchEvent: (value: any) => { }
 };
 
 export const EXPECTED_MESSAGES: any = {
@@ -15,12 +15,13 @@ export const INPUT_EXAMPLES: any = {
   requiredWithMessage: `<input [(ngModel)]="toValidate" required requiredMessage="${EXPECTED_MESSAGES.required}" validation />`,
   requiredVariableMessage: `<input [(ngModel)]="toValidate" required [requiredMessage]="requiredMessage" validation />`,
   equalTo: `<input name="field1" [(ngModel)]="toValidate" [equalTo]="equalTo" validation />`,
-  equalToElement: `<input #equalTo1 name="field1" [(ngModel)]="toValidate2" /><input name="field2" [(ngModel)]="toValidate" [equalToElement]="equalTo1" validation />`,
+  equalToElement: `<input #equalTo1 name="field1" [(ngModel)]="toValidate2" /><input name="field2"
+    [(ngModel)]="toValidate" [equalToElement]="equalTo1" validation />`,
   equalToMessage: `<input name="field1" [(ngModel)]="toValidate" [equalTo]="equalTo" [equalToMessage]="equalToMessage" validation />`
 };
 
 export class MockMessageService {
-  public add = (object: any) => {};
+  public add = (object: any) => { };
 }
 
 @Component({
@@ -34,7 +35,7 @@ export class MockMessageService {
 })
 export class TestValidateComponent {
   public element: any = {};
-  public doSubmit = () => {};
+  public doSubmit = () => { };
 }
 
 @Component({
@@ -45,6 +46,6 @@ export class TestValidationComponent {
   public toValidate: any;
   public toValidate2: any;
   public requiredMessage: string = EXPECTED_MESSAGES.required;
-  public equalTo: string = 'EQUAL';
+  public equalTo = 'EQUAL';
   public equalToMessage: string = EXPECTED_MESSAGES.equalTo;
 }
