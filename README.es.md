@@ -1,8 +1,8 @@
-# Directiva: form-validation
+# Directiva: primeng-form-validation
 
-Valudador de formularios personalizado para Angular y PrimeNG.
+Validador de formularios personalizado para Angular y PrimeNG.
 
-_Leer en otro idioma: [Inglés](https://gitlab.com/von-development-studio/angular-libraries-source/form-validation/blob/master/README.md)_
+_Leer en otro idioma: [Inglés](https://github.com/lfgarcia22/primeng-form-validation/blob/snapshot/README.md)_
 
 ## Requerimientos
 
@@ -14,19 +14,21 @@ _Leer en otro idioma: [Inglés](https://gitlab.com/von-development-studio/angula
 1. Agregar el paquete a tu proyecto:
 
   ```
-  npm install @von-development-studio/form-validation --save
+  npm install @von-development-studio/primeng-form-validation --save
   ```
 
 2. Agrega el modulo: _**FormValidationModule**_ en la sección `imports`
 
   ```typescript
-  import { FormValidationModule } from '@von-development-studio/form-validation';
+  import { FormsModule } from '@angular/forms';
+  import { FormValidationModule } from '@von-development-studio/primeng-form-validation';
 
   ...
 
   @NgModule({
     imports: [
       ...
+      FormsModule,
       FormValidationModule,
       ...
     ]
@@ -64,30 +66,9 @@ _Leer en otro idioma: [Inglés](https://gitlab.com/von-development-studio/angula
   <input name="requiredField" [(ngModel)]="value" required validation />
   ```
 
-* _**equalTo:**_ Verifica el valor actual de `[(ngModel)]` con el valor recibido en la directiva `[equalTo]`
-
-  ```html
-  <input name="equalToField" [(ngModel)]="value1" [equalTo]="value2" validation />
-  ```
-
-* _**equalToElement:**_ Verifica el valor actual con el valor del elemento recibido en la directiva `[equalToElement]`
-
-  ```html
-  <input #field1 name="field1" [(ngModel)]="value1" required validation />
-  <input name="field2" [(ngModel)]="value2" [equalToElement]="field1" validation />
-  ```
-
 ## Mensajes por defecto
 
 * _**requiredMessage:**_ `The field ${name} is required`, necesita que el elemento HTML tenga el atributo `name`
-
-* _**equalToSimpleMessage:**_ `The field ${field1} is not equal`, necesita que el elemento HTML tenga el atributo `name`. Válido con la directiva `equalTo`
-
-* _**equalToComplexMessage:**_ `The field ${field1} is not equal to ${field2}`, necesita que el elemento HTML tenga el atributo `name`. Válido con la directiva `equalToElement`
-
-## Mensajes personalizados
-
-* _**equalToMessage:**_ Este mensaje remplazará _**equalToSimpleMessage**_ & _**equalToComplexMessage**_
 
 <hr>
 
