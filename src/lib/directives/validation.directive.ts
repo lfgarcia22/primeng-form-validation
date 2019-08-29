@@ -36,6 +36,7 @@ export class FormValidationDirective implements Validator, OnInit {
     } else {
       this.messages = VALIDATION_MESSAGES.ES;
     }
+    this.element.nativeElement.attributes['validation'] = true;
   }
 
   validate(formValue: FormControl) {
@@ -47,6 +48,9 @@ export class FormValidationDirective implements Validator, OnInit {
     this.runHtmlValidations();
     if (this.validator && this.validator.required) {
       this.messageService.add({ severity: 'error', detail: this.message });
+      this.element.nativeElement.attributes['validation'] = false;
+      this.element.nativeElement.classList.remove('ng-valid');
+      this.element.nativeElement.classList.add('ng-invalid');
     }
   }
 
@@ -58,8 +62,9 @@ export class FormValidationDirective implements Validator, OnInit {
   }
 
   private getLabelInnerText = () => {
+    const isRequired = this.element.nativeElement.hasAttribute('required');
     const labelElement = this.closestFormEl.querySelector(`label[for='${this.name}']`);
-    if (labelElement) {
+    if (isRequired && labelElement) {
       labelElement.classList.add('label-required');
       return this.customName || labelElement.innerText;
     }
@@ -69,9 +74,12 @@ export class FormValidationDirective implements Validator, OnInit {
   private runHtmlValidations = () => {
     this.validator = null;
     const labelText = this.getLabelInnerText();
+    this.element.nativeElement.attributes['validation'] = true;
+    this.element.nativeElement.classList.add('ng-valid');
+    this.element.nativeElement.classList.remove('ng-invalid');
 
     const isRequired = this.element.nativeElement.hasAttribute('required');
-    if (isRequired && this.ngModel == null) {
+    if (isRequired && (this.ngModel == null || this.ngModel === '')) {
       const message = this.requiredMessage || this.messages.requiredMessage;
       const name = labelText || this.name;
       this.message = message.replace('${name}', name);

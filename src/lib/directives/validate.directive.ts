@@ -16,13 +16,17 @@ export class FormValidateDirective {
     let isFocused = false;
 
     elements.forEach((el: any) => {
-      const inputEl = this.getInputElement(el);
-      if (!inputEl.validity.valid || inputEl.classList.contains('ng-invalid')) {
-        el.dispatchEvent(new Event('executeValidation'));
-        isValid = false;
-        if (!isFocused) {
-          isFocused = true;
-          inputEl.focus();
+      el.dispatchEvent(new Event('executeValidation'));
+      isValid = el.attributes['validation'];
+
+      const ignoreValidity = this.shouldIgnoreValidity(el.tagName);
+      if (!ignoreValidity) {
+        const inputEl = this.getInputElement(el);
+        if (!el.attributes['validation']) {
+          if (!isFocused) {
+            isFocused = true;
+            inputEl.focus();
+          }
         }
       }
     });
@@ -32,11 +36,16 @@ export class FormValidateDirective {
   }
 
   private getInputElement = (el: any) => {
-    if (el.tagName === 'P-CALENDAR' || el.tagName === 'P-AUTOCOMPLETE') {
+    if (el.tagName === 'P-CALENDAR'
+      || el.tagName === 'P-AUTOCOMPLETE') {
       const inputEl = el.querySelector('input');
       return inputEl;
     }
     return el;
+  }
+
+  private shouldIgnoreValidity = (tagName) => {
+    return tagName === 'P-DROPDOWN';
   }
 
 }
