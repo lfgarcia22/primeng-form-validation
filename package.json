@@ -1,15 +1,16 @@
 {
-  "name": "@von-development-studio/form-validation",
-  "version": "0.0.6-SNAPSHOT-2",
+  "name": "@von-development-studio/primeng-form-validation",
+  "version": "0.0.1-SNAPSHOT-1",
   "description": "Custom form validation for Angular and PrimeNG.",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/von-development-studio/angular-libraries-source/form-validation"
+    "url": "https://github.com/lfgarcia22/primeng-form-validation.git"
   },
   "keywords": [
     "angular",
     "angular2",
     "angular 2",
+    "primeng",
     "form",
     "validation"
   ],
