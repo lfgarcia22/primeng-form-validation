@@ -17,7 +17,9 @@ export class FormValidateDirective {
 
     elements.forEach((el: any) => {
       el.dispatchEvent(new Event('executeValidation'));
-      isValid = el.attributes['validation'];
+      if (isValid) {
+        isValid = el.attributes['validation'];
+      }
 
       const ignoreValidity = this.shouldIgnoreValidity(el.tagName);
       if (!ignoreValidity) {
