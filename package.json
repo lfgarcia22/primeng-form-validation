@@ -17,8 +17,8 @@
   "author": "Luis García Castro",
   "license": "ISC",
   "peerDependencies": {
-    "@angular/common": "^7.1.4",
-    "@angular/core": "^7.1.4",
-    "primeng": "^7.0.4"
+    "@angular/common": "^8.2.6",
+    "@angular/core": "^8.2.6",
+    "primeng": "^8.0.3"
   }
 }
